@@ -2,12 +2,14 @@ import React from 'react'
 
 import GlobalStyle from './../../styles/global'
 
+import LifePointsDisplay from './../../components/LifePointsDisplay/index'
+
 export default function Home() {
   return (
     <>
       <GlobalStyle />
 
-      <h1>Olá</h1>
+      <LifePointsDisplay playerLifePoints={8000} />
     </>
   )
 }
