@@ -31,4 +31,10 @@ it('render a player life points based in props', () => {
   })
 
   expect(container.textContent).toBe('8000')
+
+  act(() => {
+    render(<LifePointsDisplay playerLifePoints={6200}/>, container)
+  })
+
+  expect(container.textContent).toBe('6200')
 })
