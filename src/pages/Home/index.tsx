@@ -47,6 +47,7 @@ export default function Home() {
     
     } else if (isThousand && !isThirdNumberIsZero && !isFourthNumberIsZero) {
       setCalculatorValue(`${calculatorValue.slice(0, 3)}0`)
+      
     } else if (isThousand && isThirdNumberIsZero && isFourthNumberIsZero) {
       setCalculatorValue(`${calculatorValue[0]}00`)
 
