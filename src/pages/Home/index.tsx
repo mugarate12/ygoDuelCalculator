@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { IconType } from 'react-icons'
+import { StyledComponent } from 'styled-components'
 
 import GlobalStyle from './../../styles/global'
 
@@ -11,6 +13,9 @@ import IconButton from './../../components/IconButton/index'
 
 export default function Home() {
   const [calculatorValue, setCalculatorValue] = useState<string>('00')
+  const [playerOneLifePoints, setPlayerOneLifePoints] = useState<number>(8000)
+  const [playerTwoLifePoints, setPlayerTwoLifePoints] = useState<number>(8000)
+  const [dice, setDice] = useState<StyledComponent<IconType, any>>(Styled.GenericDice)
 
   function handleCalculatorValue(number: number) {
     const isLessThanHundred = calculatorValue.length < 4
@@ -56,18 +61,84 @@ export default function Home() {
     }
   }
 
+  function handleChangeCalcalatorValue(number: number, player: 1 | 2, operation: 'plus' | 'minus') {
+    if (Number(calculatorValue) <= 0) {
+      return
+    }
+
+    function zeroLifePoints(number: number) {
+      if (number < 0) {
+        return 0
+      } else {
+        return number
+      }
+    }
+    
+    if (operation === 'plus') {
+      if (player === 1) {
+        setPlayerOneLifePoints(playerOneLifePoints + number)
+      
+      } else {
+        setPlayerTwoLifePoints(playerTwoLifePoints + number)
+      }
+    } else {
+      if (player === 1) {
+        setPlayerOneLifePoints(zeroLifePoints(playerOneLifePoints - number))
+      
+      } else {
+        setPlayerTwoLifePoints(zeroLifePoints(playerTwoLifePoints - number))
+      }
+    }
+
+    setCalculatorValue('00')
+  }
+
+  function reloadLifePoints() {
+    setPlayerOneLifePoints(8000)
+    setPlayerTwoLifePoints(8000)
+  }
+
+  function handleChangeDice() {
+    const diceNumbers = [
+      Styled.DiceOne,
+      Styled.DiceTwo,
+      Styled.DiceThree,
+      Styled.DiceFour,
+      Styled.DiceFive,
+      Styled.DiceSix
+    ]
+
+    let diceNumber = 0
+    while (diceNumber < 1 || diceNumber > 5) {
+      diceNumber = Math.round(Math.random() * 10)
+    }
+
+    setDice(diceNumbers[diceNumber])
+  }
+
   return (
     <>
       <GlobalStyle />
 
-      <LifePointsDisplay playerLifePoints={8000} />
+      <LifePointsDisplay playerLifePoints={playerOneLifePoints} />
+      <LifePointsDisplay playerLifePoints={playerTwoLifePoints} />
+
       <NumberButton number={1} onClick={() => handleCalculatorValue(1)} />
       <NumberButton number={2} onClick={() => handleCalculatorValue(2)} />
 
       <CalculatorDisplay value={calculatorValue} />
 
       <IconButton Icon={Styled.BackspaceIcon} onClick={() => handleDeleteCalculatorValue()} />
-      <IconButton Icon={Styled.PlusIcon}/>
+
+      <IconButton Icon={Styled.Reload} onClick={() => reloadLifePoints()} />
+
+      <IconButton Icon={dice} onClick={() => handleChangeDice()} />
+      
+      <IconButton Icon={Styled.PlusIcon} onClick={() => handleChangeCalcalatorValue(Number(calculatorValue), 1, 'plus')} />
+      <IconButton Icon={Styled.MinusIcon} onClick={() => handleChangeCalcalatorValue(Number(calculatorValue), 1, 'minus')} />
+
+      <IconButton Icon={Styled.PlusIcon} onClick={() => handleChangeCalcalatorValue(Number(calculatorValue), 2, 'plus')} />
+      <IconButton Icon={Styled.MinusIcon} onClick={() => handleChangeCalcalatorValue(Number(calculatorValue), 2, 'minus')} />
     </>
   )
 }
