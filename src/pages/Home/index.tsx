@@ -8,9 +8,11 @@ import * as Styled from './styles'
 
 import LifePointsDisplay from './../../components/LifePointsDisplay/index'
 import CalculatorDisplay from './../../components/CalculatorDisplay/index'
-import NumberButton from './../../components/NumberButton/index'
 import IconButton from './../../components/IconButton/index'
 import GameHistory from './../../components/GameHistory/index'
+
+import PlayerOneActions from './../../containers/PlayerOneActions/index'
+import PlayerTwoActions from './../../containers/PlayerTwoActions/index'
 
 export default function Home() {
   const [calculatorValue, setCalculatorValue] = useState<string>('00')
@@ -165,29 +167,52 @@ export default function Home() {
 
       {renderGameHistoryComponent()}
 
-      <LifePointsDisplay playerLifePoints={playerOneLifePoints} />
-      <LifePointsDisplay playerLifePoints={playerTwoLifePoints} />
-
-      <NumberButton number={1} onClick={() => handleCalculatorValue(1)} />
-      <NumberButton number={2} onClick={() => handleCalculatorValue(2)} />
-
-      <CalculatorDisplay value={calculatorValue} />
-
-      <IconButton Icon={Styled.BackspaceIcon} onClick={() => handleDeleteCalculatorValue()} />
-
-      <IconButton Icon={Styled.Reload} onClick={() => reloadLifePoints()} />
-
-      <IconButton Icon={dice} onClick={() => handleChangeDice()} />
-
-      <IconButton Icon={Styled.BackIcon} onClick={() => undoEvent()} />
-
-      <IconButton Icon={Styled.HistoryIcon} onClick={() => setShowGameHistory(true)} />
+      <PlayerTwoActions
+        historyFunction={() => setShowGameHistory(true)}
+        undoFunction={undoEvent}
+        reloadFunction={reloadLifePoints}
+        backSpaceFunction={handleDeleteCalculatorValue}
+        changeDiceFunction={handleChangeDice}
+        handleCalculateFunction={handleCalculatorValue}
+        diceIcon={dice} 
+      />
       
-      <IconButton Icon={Styled.PlusIcon} onClick={() => handleChangeCalcalatorValue(Number(calculatorValue), 1, 'plus')} />
-      <IconButton Icon={Styled.MinusIcon} onClick={() => handleChangeCalcalatorValue(Number(calculatorValue), 1, 'minus')} />
+      <Styled.PlayerTwoPointsContainer>
+        <LifePointsDisplay playerLifePoints={playerTwoLifePoints} />
 
-      <IconButton Icon={Styled.PlusIcon} onClick={() => handleChangeCalcalatorValue(Number(calculatorValue), 2, 'plus')} />
-      <IconButton Icon={Styled.MinusIcon} onClick={() => handleChangeCalcalatorValue(Number(calculatorValue), 2, 'minus')} />
+        <Styled.ButtonsContainer>
+          <CalculatorDisplay value={calculatorValue} />
+
+          <Styled.ActionButtonsContainer>
+            <IconButton Icon={Styled.PlusIcon} onClick={() => handleChangeCalcalatorValue(Number(calculatorValue), 2, 'plus')} />
+            <IconButton Icon={Styled.MinusIcon} onClick={() => handleChangeCalcalatorValue(Number(calculatorValue), 2, 'minus')} />
+          </Styled.ActionButtonsContainer>
+        </Styled.ButtonsContainer>
+      </Styled.PlayerTwoPointsContainer>
+
+      <Styled.PlayerOnePointsContainer>
+        <LifePointsDisplay playerLifePoints={playerOneLifePoints} />
+
+        <Styled.ButtonsContainer>
+          <CalculatorDisplay value={calculatorValue} />
+
+          <Styled.ActionButtonsContainer>
+            <IconButton Icon={Styled.PlusIcon} onClick={() => handleChangeCalcalatorValue(Number(calculatorValue), 1, 'plus')} />
+            <IconButton Icon={Styled.MinusIcon} onClick={() => handleChangeCalcalatorValue(Number(calculatorValue), 1, 'minus')} />
+          </Styled.ActionButtonsContainer>
+        </Styled.ButtonsContainer>
+      </Styled.PlayerOnePointsContainer>
+
+      <PlayerOneActions
+        historyFunction={() => setShowGameHistory(true)}
+        undoFunction={undoEvent}
+        reloadFunction={reloadLifePoints}
+        backSpaceFunction={handleDeleteCalculatorValue}
+        changeDiceFunction={handleChangeDice}
+        handleCalculateFunction={handleCalculatorValue}
+        diceIcon={dice} 
+      />
+      
     </>
   )
 }

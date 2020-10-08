@@ -2,35 +2,57 @@ import styled from 'styled-components'
 import {
   FaPlus,
   FaMinus,
-  FaBackspace,
-  FaSync,
   FaDice,
   FaDiceOne,
   FaDiceTwo,
   FaDiceThree,
   FaDiceFour,
   FaDiceFive,
-  FaDiceSix,
-  FaTasks,
-  FaChevronLeft
+  FaDiceSix
 } from 'react-icons/fa'
 
 const iconsSize = '14px'
+
+export const PlayerOnePointsContainer = styled.div`
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+`
+
+export const PlayerTwoPointsContainer = styled.div`
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  transform: rotate(180deg);
+
+  @media (min-width: 450px) {
+    transform: rotate(0deg);
+  }
+`
+
+export const ButtonsContainer = styled.div`
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+`
+
+export const ActionButtonsContainer = styled.div`
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+`
 
 // icons with buttons
 export const PlusIcon = styled(FaPlus)`
   font-size: ${iconsSize};
 `
 
-export const BackspaceIcon = styled(FaBackspace)`
-  font-size: ${iconsSize};
-`
-
 export const MinusIcon = styled(FaMinus)`
-  font-size: ${iconsSize};
-`
-
-export const Reload = styled(FaSync)`
   font-size: ${iconsSize};
 `
 
@@ -59,13 +81,5 @@ export const DiceFive = styled(FaDiceFive)`
 `
 
 export const DiceSix = styled(FaDiceSix)`
-  font-size: ${iconsSize};
-`
-
-export const HistoryIcon = styled(FaTasks)`
-  font-size: ${iconsSize};
-`
-
-export const BackIcon = styled(FaChevronLeft)`
   font-size: ${iconsSize};
 `

@@ -41,3 +41,4 @@
 [1007/235041.928:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Morfeus\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\f576593c-231b-4b56-af53-f023f72ae9d5: O sistema não pode encontrar o caminho especificado. (0x3)
 [1007/235042.063:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Morfeus\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\fc95fe02-22a2-42b2-b7cb-8fca6db2567f: O sistema não pode encontrar o caminho especificado. (0x3)
 [1007/235042.063:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema não pode encontrar o caminho especificado. (0x3)
+[1008/164200.002:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema não pode encontrar o caminho especificado. (0x3)

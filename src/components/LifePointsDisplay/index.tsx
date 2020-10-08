@@ -1,12 +1,16 @@
 import React from 'react'
 
+import * as Styled from './styles'
+
 interface LifePointsDisplayIterface {
   playerLifePoints: number;
 }
 
 const LifePointsDisplay: React.FC<LifePointsDisplayIterface> = ({ playerLifePoints }) => {
   return (
-    <h1>{playerLifePoints}</h1>
+    <Styled.Container>
+      <Styled.LifePoints>{playerLifePoints}</Styled.LifePoints>
+    </Styled.Container>
   )
 }
 
