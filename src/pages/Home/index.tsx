@@ -10,12 +10,25 @@ import LifePointsDisplay from './../../components/LifePointsDisplay/index'
 import CalculatorDisplay from './../../components/CalculatorDisplay/index'
 import NumberButton from './../../components/NumberButton/index'
 import IconButton from './../../components/IconButton/index'
+import GameHistory from './../../components/GameHistory/index'
 
 export default function Home() {
   const [calculatorValue, setCalculatorValue] = useState<string>('00')
   const [playerOneLifePoints, setPlayerOneLifePoints] = useState<number>(8000)
   const [playerTwoLifePoints, setPlayerTwoLifePoints] = useState<number>(8000)
   const [dice, setDice] = useState<StyledComponent<IconType, any>>(Styled.GenericDice)
+  const [eventList, setEventList] = useState<Array<string>>([])
+  const [showGameHistory, setShowGameHistory] = useState<boolean>(false)
+
+  function addEventToSessionStorage(eventDescription: string) {
+    setEventList([eventDescription, ...eventList])
+  }
+
+  function renderGameHistoryComponent() {
+    if (showGameHistory) {
+      return <GameHistory history={eventList} CloseFunction={setShowGameHistory} />
+    }
+  }
 
   function handleCalculatorValue(number: number) {
     const isLessThanHundred = calculatorValue.length < 4
@@ -77,16 +90,23 @@ export default function Home() {
     if (operation === 'plus') {
       if (player === 1) {
         setPlayerOneLifePoints(playerOneLifePoints + number)
+        addEventToSessionStorage(`Player 1: ${playerOneLifePoints} + ${number} = ${playerOneLifePoints + number}`)
       
       } else {
         setPlayerTwoLifePoints(playerTwoLifePoints + number)
+        addEventToSessionStorage(`Player 2: ${playerTwoLifePoints} + ${number} = ${playerTwoLifePoints + number}`)
       }
     } else {
       if (player === 1) {
-        setPlayerOneLifePoints(zeroLifePoints(playerOneLifePoints - number))
+        const newlifePoints = zeroLifePoints(playerOneLifePoints - number)
+        setPlayerOneLifePoints(newlifePoints)
+        if (newlifePoints > 0) addEventToSessionStorage(`Player 1: ${playerOneLifePoints} - ${number} = ${playerOneLifePoints - number}`)
+        
       
       } else {
+        const newlifePoints = zeroLifePoints(playerTwoLifePoints - number)
         setPlayerTwoLifePoints(zeroLifePoints(playerTwoLifePoints - number))
+        if (newlifePoints > 0) addEventToSessionStorage(`Player 2: ${playerTwoLifePoints} - ${number} = ${playerTwoLifePoints - number}`)
       }
     }
 
@@ -96,6 +116,8 @@ export default function Home() {
   function reloadLifePoints() {
     setPlayerOneLifePoints(8000)
     setPlayerTwoLifePoints(8000)
+
+    addEventToSessionStorage('Life Points Reset!')
   }
 
   function handleChangeDice() {
@@ -108,17 +130,20 @@ export default function Home() {
       Styled.DiceSix
     ]
 
-    let diceNumber = 0
-    while (diceNumber < 1 || diceNumber > 5) {
+    let diceNumber = -1
+    while (diceNumber < 0 || diceNumber > 5) {
       diceNumber = Math.round(Math.random() * 10)
     }
 
+    addEventToSessionStorage(`rolled dice: ${diceNumber + 1}`)
     setDice(diceNumbers[diceNumber])
   }
 
   return (
     <>
       <GlobalStyle />
+
+      {renderGameHistoryComponent()}
 
       <LifePointsDisplay playerLifePoints={playerOneLifePoints} />
       <LifePointsDisplay playerLifePoints={playerTwoLifePoints} />
@@ -133,6 +158,8 @@ export default function Home() {
       <IconButton Icon={Styled.Reload} onClick={() => reloadLifePoints()} />
 
       <IconButton Icon={dice} onClick={() => handleChangeDice()} />
+
+      <IconButton Icon={Styled.HistoryIcon} onClick={() => setShowGameHistory(true)} />
       
       <IconButton Icon={Styled.PlusIcon} onClick={() => handleChangeCalcalatorValue(Number(calculatorValue), 1, 'plus')} />
       <IconButton Icon={Styled.MinusIcon} onClick={() => handleChangeCalcalatorValue(Number(calculatorValue), 1, 'minus')} />
