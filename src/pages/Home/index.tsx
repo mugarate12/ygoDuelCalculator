@@ -20,7 +20,7 @@ export default function Home() {
   const [eventList, setEventList] = useState<Array<string>>([])
   const [showGameHistory, setShowGameHistory] = useState<boolean>(false)
 
-  function addEventToSessionStorage(eventDescription: string) {
+  function addEventToList(eventDescription: string) {
     setEventList([eventDescription, ...eventList])
   }
 
@@ -90,23 +90,23 @@ export default function Home() {
     if (operation === 'plus') {
       if (player === 1) {
         setPlayerOneLifePoints(playerOneLifePoints + number)
-        addEventToSessionStorage(`Player 1: ${playerOneLifePoints} + ${number} = ${playerOneLifePoints + number}`)
+        addEventToList(`Player 1: ${playerOneLifePoints} + ${number} = ${playerOneLifePoints + number}`)
       
       } else {
         setPlayerTwoLifePoints(playerTwoLifePoints + number)
-        addEventToSessionStorage(`Player 2: ${playerTwoLifePoints} + ${number} = ${playerTwoLifePoints + number}`)
+        addEventToList(`Player 2: ${playerTwoLifePoints} + ${number} = ${playerTwoLifePoints + number}`)
       }
     } else {
       if (player === 1) {
         const newlifePoints = zeroLifePoints(playerOneLifePoints - number)
         setPlayerOneLifePoints(newlifePoints)
-        if (newlifePoints > 0) addEventToSessionStorage(`Player 1: ${playerOneLifePoints} - ${number} = ${playerOneLifePoints - number}`)
+        if (newlifePoints > 0) addEventToList(`Player 1: ${playerOneLifePoints} - ${number} = ${playerOneLifePoints - number}`)
         
       
       } else {
         const newlifePoints = zeroLifePoints(playerTwoLifePoints - number)
         setPlayerTwoLifePoints(zeroLifePoints(playerTwoLifePoints - number))
-        if (newlifePoints > 0) addEventToSessionStorage(`Player 2: ${playerTwoLifePoints} - ${number} = ${playerTwoLifePoints - number}`)
+        if (newlifePoints > 0) addEventToList(`Player 2: ${playerTwoLifePoints} - ${number} = ${playerTwoLifePoints - number}`)
       }
     }
 
@@ -117,7 +117,27 @@ export default function Home() {
     setPlayerOneLifePoints(8000)
     setPlayerTwoLifePoints(8000)
 
-    addEventToSessionStorage('Life Points Reset!')
+    addEventToList('Life Points Reset!')
+  }
+
+  function undoEvent() {
+    let event = eventList[0] || ''
+
+    const isPlayerPointsChange = event.includes('Player')
+    const isPlayerOne = event.includes('Player 1')
+    const isPlayerTwo = event.includes('Player 2')
+    
+    if (isPlayerPointsChange) {
+      const lifePoints = event.split(' ')[2]
+
+      if (isPlayerOne) setPlayerOneLifePoints(Number(lifePoints))
+      if (isPlayerTwo) setPlayerTwoLifePoints(Number(lifePoints))
+
+      setEventList(eventList.slice(1))
+      return
+    } else {
+      setEventList(eventList.slice(1))
+    }
   }
 
   function handleChangeDice() {
@@ -135,7 +155,7 @@ export default function Home() {
       diceNumber = Math.round(Math.random() * 10)
     }
 
-    addEventToSessionStorage(`rolled dice: ${diceNumber + 1}`)
+    addEventToList(`rolled dice: ${diceNumber + 1}`)
     setDice(diceNumbers[diceNumber])
   }
 
@@ -158,6 +178,8 @@ export default function Home() {
       <IconButton Icon={Styled.Reload} onClick={() => reloadLifePoints()} />
 
       <IconButton Icon={dice} onClick={() => handleChangeDice()} />
+
+      <IconButton Icon={Styled.BackIcon} onClick={() => undoEvent()} />
 
       <IconButton Icon={Styled.HistoryIcon} onClick={() => setShowGameHistory(true)} />
       

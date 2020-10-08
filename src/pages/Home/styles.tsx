@@ -11,7 +11,8 @@ import {
   FaDiceFour,
   FaDiceFive,
   FaDiceSix,
-  FaTasks
+  FaTasks,
+  FaChevronLeft
 } from 'react-icons/fa'
 
 const iconsSize = '14px'
@@ -62,5 +63,9 @@ export const DiceSix = styled(FaDiceSix)`
 `
 
 export const HistoryIcon = styled(FaTasks)`
+  font-size: ${iconsSize};
+`
+
+export const BackIcon = styled(FaChevronLeft)`
   font-size: ${iconsSize};
 `

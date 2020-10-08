@@ -35,10 +35,12 @@ export const CloseIcon = styled(FaTimes)`
 
 export const Content = styled.div`
   width: 100%;
+  height: 100vh - 60px;
 
   margin-top: 20px;
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `
@@ -46,4 +48,6 @@ export const Content = styled.div`
 export const Event = styled.p`
   font-size: 16px;
   font-size: 1rem;
+
+  margin-bottom: 5px;
 `
