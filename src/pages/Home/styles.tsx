@@ -60,9 +60,26 @@ export const CalculatorValueDesktopContainer = styled.div`
   width: 99%;
   margin: 2px;
 
+  display: flex;
+  flex-direction: row;
+
   @media (max-width: 450px) {
     display: none;
   }
+`
+
+export const TimerContainer = styled.div`
+  width: 100%;
+  /* height: 100%; */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+export const TimerContent = styled.p`
+  font-size: 24px;
+  font-size: 1.5rem;
 `
 
 // icons with buttons

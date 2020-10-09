@@ -23,7 +23,27 @@ export default function Home() {
   const [dice2, setDice2] = useState<StyledComponent<IconType, any>>(Styled.GenericDice)
   const [eventList, setEventList] = useState<Array<string>>([])
   const [showGameHistory, setShowGameHistory] = useState<boolean>(false)
+  const [time] = useState<string>('40:00')
 
+  // setInterval(() => {
+  //   let [minutes, seconds] = time.split(':')
+  //   let numberMinutes = Number(minutes)
+  //   let numberSeconds = Number(seconds)
+    
+  //   if (numberMinutes === 0 && numberSeconds === 0) {
+  //     setTime('TIME')
+
+  //   } else if (numberSeconds === 0) {
+  //     numberMinutes -= 1
+  //     numberSeconds = 60
+    
+  //   } else {
+  //     numberSeconds -= 1  
+  //   }
+    
+  //   setTime(`${numberMinutes}:${numberSeconds}`)
+  // }, 10000)
+  
   function addEventToList(eventDescription: string) {
     setEventList([eventDescription, ...eventList])
   }
@@ -209,6 +229,10 @@ export default function Home() {
 
       <Styled.CalculatorValueDesktopContainer>
         <CalculatorDisplay value={calculatorValue} />
+        
+        <Styled.TimerContainer>
+          <Styled.TimerContent>{time}</Styled.TimerContent>
+        </Styled.TimerContainer>
       </Styled.CalculatorValueDesktopContainer>
       
       <Styled.PlayerTwoPointsContainer>
