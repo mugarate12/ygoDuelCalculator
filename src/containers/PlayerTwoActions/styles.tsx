@@ -6,10 +6,11 @@ import {
   FaTasks
 } from 'react-icons/fa'
 
-const iconsSize = '14px'
+const iconsSize = '24px'
 
 export const Container = styled.div`
   width: 100%;
+  height: 40vh;
 
   display: grid;
   grid-template-columns: repeat(5, 1fr);

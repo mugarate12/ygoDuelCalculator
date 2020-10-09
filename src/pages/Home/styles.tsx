@@ -11,10 +11,11 @@ import {
   FaDiceSix
 } from 'react-icons/fa'
 
-const iconsSize = '14px'
+const iconsSize = '24px'
 
 export const PlayerOnePointsContainer = styled.div`
   width: 100%;
+  height: 10vh;
 
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -22,6 +23,7 @@ export const PlayerOnePointsContainer = styled.div`
 
 export const PlayerTwoPointsContainer = styled.div`
   width: 100%;
+  height: 10vh;
 
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -42,6 +44,7 @@ export const ButtonsContainer = styled.div`
 
 export const ActionButtonsContainer = styled.div`
   width: 100%;
+  height: 100%;
 
   display: grid;
   grid-template-columns: repeat(2, 1fr);

@@ -16,9 +16,11 @@ import PlayerTwoActions from './../../containers/PlayerTwoActions/index'
 
 export default function Home() {
   const [calculatorValue, setCalculatorValue] = useState<string>('00')
+  const [calculatorPlayerTwoValue, setCalculatorPlayerTwoValue] = useState<string>('00')
   const [playerOneLifePoints, setPlayerOneLifePoints] = useState<number>(8000)
   const [playerTwoLifePoints, setPlayerTwoLifePoints] = useState<number>(8000)
   const [dice, setDice] = useState<StyledComponent<IconType, any>>(Styled.GenericDice)
+  const [dice2, setDice2] = useState<StyledComponent<IconType, any>>(Styled.GenericDice)
   const [eventList, setEventList] = useState<Array<string>>([])
   const [showGameHistory, setShowGameHistory] = useState<boolean>(false)
 
@@ -32,52 +34,76 @@ export default function Home() {
     }
   }
 
-  function handleCalculatorValue(number: number) {
-    const isLessThanHundred = calculatorValue.length < 4
-    const isThousand = calculatorValue.length === 4
-    const isThirdNumberIsZero = Number(calculatorValue[2]) === 0
-    const isFourthNumberIsZero = Number(calculatorValue[3]) === 0
+  function calculatorMobileOrNot(player: 1 | 2) {
+    let setStateOnCalculatorValue: React.Dispatch<React.SetStateAction<string>>
+    let playerCalculatorValue: string
 
-    if (isLessThanHundred) {
-      setCalculatorValue(`${number}${calculatorValue}`)
-
-    } else if (isThousand && isThirdNumberIsZero){
-      setCalculatorValue(`${calculatorValue.slice(0, 2)}${number}0`)
-
-    } else if (isThousand && isFourthNumberIsZero){
-      setCalculatorValue(`${calculatorValue.slice(0, 3)}${number}`)
+    if (player === 1 || window.innerWidth > 450) {
+      playerCalculatorValue = calculatorValue
+      setStateOnCalculatorValue = setCalculatorValue
 
     } else {
-      setCalculatorValue(`${calculatorValue}${number}`)
+      playerCalculatorValue = calculatorPlayerTwoValue
+      setStateOnCalculatorValue = setCalculatorPlayerTwoValue
+    }
+
+    return { playerCalculatorValue, setStateOnCalculatorValue }
+  }
+
+  function handleCalculatorValue(number: number, player: 1 | 2) {
+    const { playerCalculatorValue, setStateOnCalculatorValue } = calculatorMobileOrNot(player)
+
+    const isLessThanHundred = playerCalculatorValue.length < 4
+    const isThousand = playerCalculatorValue.length === 4
+    const isThirdNumberIsZero = Number(playerCalculatorValue[2]) === 0
+    const isFourthNumberIsZero = Number(playerCalculatorValue[3]) === 0
+
+    if (isLessThanHundred) {
+      setStateOnCalculatorValue(`${number}${playerCalculatorValue}`)
+
+    } else if (isThousand && isThirdNumberIsZero){
+      setStateOnCalculatorValue(`${playerCalculatorValue.slice(0, 2)}${number}0`)
+
+    } else if (isThousand && isFourthNumberIsZero){
+      setStateOnCalculatorValue(`${playerCalculatorValue.slice(0, 3)}${number}`)
+
+    } else {
+      setStateOnCalculatorValue(`${playerCalculatorValue}${number}`)
     }
   }
 
-  function handleDeleteCalculatorValue() {
-    const biggerThanThousand = calculatorValue.length > 4
-    const isThousand = calculatorValue.length === 4
-    const isHundred = calculatorValue.length === 3
-    const isThirdNumberIsZero = Number(calculatorValue[2]) === 0
-    const isFourthNumberIsZero = Number(calculatorValue[3]) === 0
+  function handleDeleteCalculatorValue(player: 1 | 2) {
+    const { playerCalculatorValue, setStateOnCalculatorValue } = calculatorMobileOrNot(player)
+
+    const biggerThanThousand = playerCalculatorValue.length > 4
+    const isThousand = playerCalculatorValue.length === 4
+    const isHundred = playerCalculatorValue.length === 3
+    const isThirdNumberIsZero = Number(playerCalculatorValue[2]) === 0
+    const isFourthNumberIsZero = Number(playerCalculatorValue[3]) === 0
 
     if (biggerThanThousand) {
-      setCalculatorValue(calculatorValue.slice(0, calculatorValue.length - 1))
+      setStateOnCalculatorValue(playerCalculatorValue.slice(0, playerCalculatorValue.length - 1))
     
     } else if (isThousand && !isThirdNumberIsZero && isFourthNumberIsZero) {
-      setCalculatorValue(`${calculatorValue.slice(0, 2)}00`)
+      setStateOnCalculatorValue(`${playerCalculatorValue.slice(0, 2)}00`)
     
     } else if (isThousand && !isThirdNumberIsZero && !isFourthNumberIsZero) {
-      setCalculatorValue(`${calculatorValue.slice(0, 3)}0`)
+      setStateOnCalculatorValue(`${playerCalculatorValue.slice(0, 3)}0`)
       
     } else if (isThousand && isThirdNumberIsZero && isFourthNumberIsZero) {
-      setCalculatorValue(`${calculatorValue[0]}00`)
+      setStateOnCalculatorValue(`${playerCalculatorValue[0]}00`)
 
     } else if (isHundred) {
-      setCalculatorValue('00')
+      setStateOnCalculatorValue('00')
     }
   }
 
-  function handleChangeCalcalatorValue(number: number, player: 1 | 2, operation: 'plus' | 'minus') {
-    if (Number(calculatorValue) <= 0) {
+  function handleChangeCalcalatorValue(player: 1 | 2, operation: 'plus' | 'minus') {
+    const { playerCalculatorValue, setStateOnCalculatorValue } = calculatorMobileOrNot(player)
+
+    const number = Number(playerCalculatorValue)
+
+    if (number <= 0) {
       return
     }
 
@@ -112,7 +138,7 @@ export default function Home() {
       }
     }
 
-    setCalculatorValue('00')
+    setStateOnCalculatorValue('00')
   }
 
   function reloadLifePoints() {
@@ -142,7 +168,7 @@ export default function Home() {
     }
   }
 
-  function handleChangeDice() {
+  function handleChangeDice(player: 1 | 2) {
     const diceNumbers = [
       Styled.DiceOne,
       Styled.DiceTwo,
@@ -158,7 +184,11 @@ export default function Home() {
     }
 
     addEventToList(`rolled dice: ${diceNumber + 1}`)
-    setDice(diceNumbers[diceNumber])
+    if (player === 1 || window.innerWidth > 450) {
+      setDice(diceNumbers[diceNumber])
+    } else {
+      setDice2(diceNumbers[diceNumber])
+    }
   }
 
   return (
@@ -174,18 +204,18 @@ export default function Home() {
         backSpaceFunction={handleDeleteCalculatorValue}
         changeDiceFunction={handleChangeDice}
         handleCalculateFunction={handleCalculatorValue}
-        diceIcon={dice} 
+        diceIcon={dice2} 
       />
       
       <Styled.PlayerTwoPointsContainer>
         <LifePointsDisplay playerLifePoints={playerTwoLifePoints} />
 
         <Styled.ButtonsContainer>
-          <CalculatorDisplay value={calculatorValue} />
+          <CalculatorDisplay value={calculatorPlayerTwoValue} />
 
           <Styled.ActionButtonsContainer>
-            <IconButton Icon={Styled.PlusIcon} onClick={() => handleChangeCalcalatorValue(Number(calculatorValue), 2, 'plus')} />
-            <IconButton Icon={Styled.MinusIcon} onClick={() => handleChangeCalcalatorValue(Number(calculatorValue), 2, 'minus')} />
+            <IconButton Icon={Styled.PlusIcon} onClick={() => handleChangeCalcalatorValue(2, 'plus')} />
+            <IconButton Icon={Styled.MinusIcon} onClick={() => handleChangeCalcalatorValue(2, 'minus')} />
           </Styled.ActionButtonsContainer>
         </Styled.ButtonsContainer>
       </Styled.PlayerTwoPointsContainer>
@@ -197,8 +227,8 @@ export default function Home() {
           <CalculatorDisplay value={calculatorValue} />
 
           <Styled.ActionButtonsContainer>
-            <IconButton Icon={Styled.PlusIcon} onClick={() => handleChangeCalcalatorValue(Number(calculatorValue), 1, 'plus')} />
-            <IconButton Icon={Styled.MinusIcon} onClick={() => handleChangeCalcalatorValue(Number(calculatorValue), 1, 'minus')} />
+            <IconButton Icon={Styled.PlusIcon} onClick={() => handleChangeCalcalatorValue(1, 'plus')} />
+            <IconButton Icon={Styled.MinusIcon} onClick={() => handleChangeCalcalatorValue(1, 'minus')} />
           </Styled.ActionButtonsContainer>
         </Styled.ButtonsContainer>
       </Styled.PlayerOnePointsContainer>

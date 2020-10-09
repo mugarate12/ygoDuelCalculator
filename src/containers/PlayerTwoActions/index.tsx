@@ -8,12 +8,12 @@ import IconButton from './../../components/IconButton/index'
 import NumberButton from './../../components/NumberButton/index'
 
 interface PlayerTwoActionsInterface {
-  backSpaceFunction: () => void;
+  backSpaceFunction: (player: 1 | 2) => void;
   reloadFunction: () => void;
   undoFunction: () => void;
   historyFunction: () => void;
-  changeDiceFunction: () => void;
-  handleCalculateFunction: (number: number) => void;
+  changeDiceFunction: (player: 1 | 2) => void;
+  handleCalculateFunction: (number: number, player: 1 | 2) => void;
   diceIcon: StyledComponent<IconType, any>;
 }
 
@@ -30,21 +30,21 @@ const PlayerTwoActions: React.FC<PlayerTwoActionsInterface> = ({
     <Styled.Container>
       <IconButton Icon={Styled.HistoryIcon} onClick={() => historyFunction()} />
       <IconButton Icon={Styled.BackIcon} onClick={() => undoFunction()} />
-      <IconButton Icon={diceIcon} onClick={() => changeDiceFunction()} />
+      <IconButton Icon={diceIcon} onClick={() => changeDiceFunction(2)} />
       <IconButton Icon={Styled.ReloadIcon} onClick={() => reloadFunction()} />
-      <IconButton Icon={Styled.BackspaceIcon} onClick={() => backSpaceFunction()} />
+      <IconButton Icon={Styled.BackspaceIcon} onClick={() => backSpaceFunction(2)} />
       
-      <NumberButton number={0} onClick={() => handleCalculateFunction(0)} />
-      <NumberButton number={1} onClick={() => handleCalculateFunction(1)} />
-      <NumberButton number={2} onClick={() => handleCalculateFunction(2)} />
-      <NumberButton number={3} onClick={() => handleCalculateFunction(3)} />
-      <NumberButton number={4} onClick={() => handleCalculateFunction(4)} />
+      <NumberButton number={0} onClick={() => handleCalculateFunction(0, 2)} />
+      <NumberButton number={1} onClick={() => handleCalculateFunction(1, 2)} />
+      <NumberButton number={2} onClick={() => handleCalculateFunction(2, 2)} />
+      <NumberButton number={3} onClick={() => handleCalculateFunction(3, 2)} />
+      <NumberButton number={4} onClick={() => handleCalculateFunction(4, 2)} />
 
-      <NumberButton number={5} onClick={() => handleCalculateFunction(5)} />
-      <NumberButton number={6} onClick={() => handleCalculateFunction(6)} />
-      <NumberButton number={7} onClick={() => handleCalculateFunction(7)} />
-      <NumberButton number={8} onClick={() => handleCalculateFunction(8)} />
-      <NumberButton number={9} onClick={() => handleCalculateFunction(9)} />
+      <NumberButton number={5} onClick={() => handleCalculateFunction(5, 2)} />
+      <NumberButton number={6} onClick={() => handleCalculateFunction(6, 2)} />
+      <NumberButton number={7} onClick={() => handleCalculateFunction(7, 2)} />
+      <NumberButton number={8} onClick={() => handleCalculateFunction(8, 2)} />
+      <NumberButton number={9} onClick={() => handleCalculateFunction(9, 2)} />
     </Styled.Container>
   )
 }
