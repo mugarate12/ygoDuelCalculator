@@ -17,7 +17,7 @@ export const Container = styled.div`
   grid-template-columns: repeat(5, 1fr);
 
   @media (min-width: 450px) {
-    height: 80vh;
+    height: 75vh;
   }
 `
 

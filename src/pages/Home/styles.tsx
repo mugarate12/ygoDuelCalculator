@@ -50,6 +50,21 @@ export const ActionButtonsContainer = styled.div`
   grid-template-columns: repeat(2, 1fr);
 `
 
+export const CalculatorValueMobileContainer = styled.div`
+  @media (min-width: 450px) {
+    display: none;
+  }
+`
+
+export const CalculatorValueDesktopContainer = styled.div`
+  width: 99%;
+  margin: 2px;
+
+  @media (max-width: 450px) {
+    display: none;
+  }
+`
+
 // icons with buttons
 export const PlusIcon = styled(FaPlus)`
   font-size: ${iconsSize};

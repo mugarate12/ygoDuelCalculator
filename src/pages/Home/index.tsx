@@ -206,12 +206,18 @@ export default function Home() {
         handleCalculateFunction={handleCalculatorValue}
         diceIcon={dice2} 
       />
+
+      <Styled.CalculatorValueDesktopContainer>
+        <CalculatorDisplay value={calculatorValue} />
+      </Styled.CalculatorValueDesktopContainer>
       
       <Styled.PlayerTwoPointsContainer>
         <LifePointsDisplay playerLifePoints={playerTwoLifePoints} />
 
         <Styled.ButtonsContainer>
-          <CalculatorDisplay value={calculatorPlayerTwoValue} />
+          <Styled.CalculatorValueMobileContainer>
+            <CalculatorDisplay value={calculatorPlayerTwoValue} />
+          </Styled.CalculatorValueMobileContainer>
 
           <Styled.ActionButtonsContainer>
             <IconButton Icon={Styled.PlusIcon} onClick={() => handleChangeCalcalatorValue(2, 'plus')} />
@@ -224,7 +230,9 @@ export default function Home() {
         <LifePointsDisplay playerLifePoints={playerOneLifePoints} />
 
         <Styled.ButtonsContainer>
-          <CalculatorDisplay value={calculatorValue} />
+          <Styled.CalculatorValueMobileContainer>
+            <CalculatorDisplay value={calculatorValue} />
+          </Styled.CalculatorValueMobileContainer>
 
           <Styled.ActionButtonsContainer>
             <IconButton Icon={Styled.PlusIcon} onClick={() => handleChangeCalcalatorValue(1, 'plus')} />
