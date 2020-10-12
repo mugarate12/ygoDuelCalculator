@@ -10,14 +10,14 @@ const iconsSize = '24px'
 
 export const Container = styled.div`
   width: 100%;
-  height: 35vh;
+  height: 38vh;
   
 
   display: grid;
   grid-template-columns: repeat(5, 1fr);
 
   @media (min-width: 450px) {
-    height: 75vh;
+    height: 60vh;
   }
 `
 

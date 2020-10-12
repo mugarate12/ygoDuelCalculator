@@ -19,6 +19,10 @@ export const PlayerOnePointsContainer = styled.div`
 
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+
+  @media (min-width: 450px) {
+    height: 15vh;
+  }
 `
 
 export const PlayerTwoPointsContainer = styled.div`
@@ -31,6 +35,8 @@ export const PlayerTwoPointsContainer = styled.div`
   transform: rotate(180deg);
 
   @media (min-width: 450px) {
+    height: 15vh;
+
     transform: rotate(0deg);
   }
 `
@@ -46,11 +52,16 @@ export const ActionButtonsContainer = styled.div`
   width: 100%;
   height: 100%;
 
+  margin-top: 2px;
+  margin-bottom: 2px;
+
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 `
 
 export const CalculatorValueMobileContainer = styled.div`
+  margin-top: 2px;
+
   @media (min-width: 450px) {
     display: none;
   }
@@ -119,8 +130,8 @@ export const TimerContent = styled.p`
   font-size: 1rem;
 
   @media (min-width: 450px) {
-    font-size: 24px;
-    font-size: 1.5rem;
+    font-size: 36px;
+    font-size: 2.25rem;
   }
 `
 
