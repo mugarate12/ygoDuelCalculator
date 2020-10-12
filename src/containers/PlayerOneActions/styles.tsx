@@ -10,7 +10,7 @@ const iconsSize = '24px'
 
 export const Container = styled.div`
   width: 100%;
-  height: 40vh;
+  height: 35vh;
   
 
   display: grid;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { IconType } from 'react-icons'
 import { StyledComponent } from 'styled-components'
 
@@ -14,6 +14,9 @@ import GameHistory from './../../components/GameHistory/index'
 import PlayerOneActions from './../../containers/PlayerOneActions/index'
 import PlayerTwoActions from './../../containers/PlayerTwoActions/index'
 
+let minutes = 40
+let seconds = 0
+
 export default function Home() {
   const [calculatorValue, setCalculatorValue] = useState<string>('00')
   const [calculatorPlayerTwoValue, setCalculatorPlayerTwoValue] = useState<string>('00')
@@ -23,26 +26,33 @@ export default function Home() {
   const [dice2, setDice2] = useState<StyledComponent<IconType, any>>(Styled.GenericDice)
   const [eventList, setEventList] = useState<Array<string>>([])
   const [showGameHistory, setShowGameHistory] = useState<boolean>(false)
-  const [time] = useState<string>('40:00')
+  const [time, setTime] = useState<string>(calculateTime())
 
-  // setInterval(() => {
-  //   let [minutes, seconds] = time.split(':')
-  //   let numberMinutes = Number(minutes)
-  //   let numberSeconds = Number(seconds)
-    
-  //   if (numberMinutes === 0 && numberSeconds === 0) {
-  //     setTime('TIME')
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTime(calculateTime())
+    }, 1000)
 
-  //   } else if (numberSeconds === 0) {
-  //     numberMinutes -= 1
-  //     numberSeconds = 60
-    
-  //   } else {
-  //     numberSeconds -= 1  
-  //   }
-    
-  //   setTime(`${numberMinutes}:${numberSeconds}`)
-  // }, 10000)
+    return () => clearTimeout(timer)
+  })
+
+  function calculateTime() {
+    const timeOut = seconds === 0 && minutes === 0
+    const nextMinute = seconds === 0 && minutes !== 0
+
+    if (timeOut) {
+      return 'TIME'
+    } else if (nextMinute) {
+      minutes -= 1
+      seconds = 60
+
+      return `${minutes}:${seconds}`
+    } else {
+      seconds -= 1
+
+      return `${minutes}:${seconds}`
+    }
+  }
   
   function addEventToList(eventDescription: string) {
     setEventList([eventDescription, ...eventList])
@@ -244,11 +254,21 @@ export default function Home() {
           </Styled.CalculatorValueMobileContainer>
 
           <Styled.ActionButtonsContainer>
-            <IconButton Icon={Styled.PlusIcon} onClick={() => handleChangeCalcalatorValue(2, 'plus')} />
-            <IconButton Icon={Styled.MinusIcon} onClick={() => handleChangeCalcalatorValue(2, 'minus')} />
+            <IconButton Icon={Styled.PlusIcon} onClick={() => handleChangeCalcalatorValue(2, 'plus')} color='#21842E' />
+            <IconButton Icon={Styled.MinusIcon} onClick={() => handleChangeCalcalatorValue(2, 'minus')} color='#19386F' />
           </Styled.ActionButtonsContainer>
         </Styled.ButtonsContainer>
       </Styled.PlayerTwoPointsContainer>
+
+      <Styled.TimerMobileContainer>
+        <Styled.TimerContainer>
+          <Styled.TimerContent>{time}</Styled.TimerContent>
+        </Styled.TimerContainer>
+
+        <Styled.TimerPlayerTwoContainer>
+          <Styled.TimerContent>{time}</Styled.TimerContent>
+        </Styled.TimerPlayerTwoContainer>
+      </Styled.TimerMobileContainer>
 
       <Styled.PlayerOnePointsContainer>
         <LifePointsDisplay playerLifePoints={playerOneLifePoints} />
@@ -259,8 +279,8 @@ export default function Home() {
           </Styled.CalculatorValueMobileContainer>
 
           <Styled.ActionButtonsContainer>
-            <IconButton Icon={Styled.PlusIcon} onClick={() => handleChangeCalcalatorValue(1, 'plus')} />
-            <IconButton Icon={Styled.MinusIcon} onClick={() => handleChangeCalcalatorValue(1, 'minus')} />
+            <IconButton Icon={Styled.PlusIcon} onClick={() => handleChangeCalcalatorValue(1, 'plus')} color='#21842E' />
+            <IconButton Icon={Styled.MinusIcon} onClick={() => handleChangeCalcalatorValue(1, 'minus')} color='#19386F' />
           </Styled.ActionButtonsContainer>
         </Styled.ButtonsContainer>
       </Styled.PlayerOnePointsContainer>
