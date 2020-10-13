@@ -1,4 +1,4 @@
-# Sarau da Praça
+# YUGIOH DUEL CALCULATOR
 
 - [Overview](#overview)
 - [Requirements](#requirements)
@@ -13,6 +13,8 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 A simple Yugioh duel calculator for face-to-face duels with changes to layout performance in desktop or mobile to use calculator for two players simultaneously or not.
+
+This Project available  in [Yugioh Duel Calculator](https://keen-clarke-b27ecc.netlify.app/)
 
 ## Requirements
 
