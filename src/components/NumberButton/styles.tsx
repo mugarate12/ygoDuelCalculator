@@ -24,4 +24,9 @@ export const NumberText = styled.p`
   font-size: 1.5rem;
 
   color: ${props => props.color};
+
+  @media (min-width: 450px) {
+    font-size: 36px;
+    font-size: 2.25rem;
+  }
 `

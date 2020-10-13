@@ -12,6 +12,7 @@ import {
 } from 'react-icons/fa'
 
 const iconsSize = '24px'
+const iconsSizeDesktop = '36px'
 
 export const PlayerOnePointsContainer = styled.div`
   width: 100%;
@@ -138,36 +139,72 @@ export const TimerContent = styled.p`
 // icons with buttons
 export const PlusIcon = styled(FaPlus)`
   font-size: ${iconsSize};
+
+  @media (min-width: 450px) {
+    font-size: ${iconsSizeDesktop};
+  }
 `
 
 export const MinusIcon = styled(FaMinus)`
   font-size: ${iconsSize};
+
+  @media (min-width: 450px) {
+    font-size: ${iconsSizeDesktop};
+  }
 `
 
 export const GenericDice = styled(FaDice)`
   font-size: ${iconsSize};
+
+  @media (min-width: 450px) {
+    font-size: ${iconsSizeDesktop};
+  }
 `
 
 export const DiceOne = styled(FaDiceOne)`
   font-size: ${iconsSize};
+
+  @media (min-width: 450px) {
+    font-size: ${iconsSizeDesktop};
+  }
 `
 
 export const DiceTwo = styled(FaDiceTwo)`
   font-size: ${iconsSize};
+
+  @media (min-width: 450px) {
+    font-size: ${iconsSizeDesktop};
+  }
 `
 
 export const DiceThree = styled(FaDiceThree)`
   font-size: ${iconsSize};
+
+  @media (min-width: 450px) {
+    font-size: ${iconsSizeDesktop};
+  }
 `
 
 export const DiceFour = styled(FaDiceFour)`
   font-size: ${iconsSize};
+
+  @media (min-width: 450px) {
+    font-size: ${iconsSizeDesktop};
+  }
 `
 
 export const DiceFive = styled(FaDiceFive)`
   font-size: ${iconsSize};
+
+  @media (min-width: 450px) {
+    font-size: ${iconsSizeDesktop};
+  }
 `
 
 export const DiceSix = styled(FaDiceSix)`
   font-size: ${iconsSize};
+
+  @media (min-width: 450px) {
+    font-size: ${iconsSizeDesktop};
+  }
 `
