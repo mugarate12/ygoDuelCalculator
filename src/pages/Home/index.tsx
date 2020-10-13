@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { IconType } from 'react-icons'
 import { StyledComponent } from 'styled-components'
 
@@ -10,12 +10,10 @@ import LifePointsDisplay from './../../components/LifePointsDisplay/index'
 import CalculatorDisplay from './../../components/CalculatorDisplay/index'
 import IconButton from './../../components/IconButton/index'
 import GameHistory from './../../components/GameHistory/index'
+import Timer from './../../components/Timer/index'
 
 import PlayerOneActions from './../../containers/PlayerOneActions/index'
 import PlayerTwoActions from './../../containers/PlayerTwoActions/index'
-
-let minutes = 40
-let seconds = 0
 
 export default function Home() {
   const [calculatorValue, setCalculatorValue] = useState<string>('00')
@@ -26,33 +24,6 @@ export default function Home() {
   const [dice2, setDice2] = useState<StyledComponent<IconType, any>>(Styled.GenericDice)
   const [eventList, setEventList] = useState<Array<string>>([])
   const [showGameHistory, setShowGameHistory] = useState<boolean>(false)
-  const [time, setTime] = useState<string>(calculateTime())
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setTime(calculateTime())
-    }, 1000)
-
-    return () => clearTimeout(timer)
-  })
-
-  function calculateTime() {
-    const timeOut = seconds === 0 && minutes === 0
-    const nextMinute = seconds === 0 && minutes !== 0
-
-    if (timeOut) {
-      return 'TIME'
-    } else if (nextMinute) {
-      minutes -= 1
-      seconds = 60
-
-      return `${minutes}:${seconds}`
-    } else {
-      seconds -= 1
-
-      return `${minutes}:${seconds}`
-    }
-  }
   
   function addEventToList(eventDescription: string) {
     setEventList([eventDescription, ...eventList])
@@ -240,9 +211,7 @@ export default function Home() {
       <Styled.CalculatorValueDesktopContainer>
         <CalculatorDisplay value={calculatorValue} />
         
-        <Styled.TimerContainer>
-          <Styled.TimerContent>{time}</Styled.TimerContent>
-        </Styled.TimerContainer>
+        <Timer isMobile={false} />
       </Styled.CalculatorValueDesktopContainer>
       
       <Styled.PlayerTwoPointsContainer>
@@ -260,15 +229,7 @@ export default function Home() {
         </Styled.ButtonsContainer>
       </Styled.PlayerTwoPointsContainer>
 
-      <Styled.TimerMobileContainer>
-        <Styled.TimerContainer>
-          <Styled.TimerContent>{time}</Styled.TimerContent>
-        </Styled.TimerContainer>
-
-        <Styled.TimerPlayerTwoContainer>
-          <Styled.TimerContent>{time}</Styled.TimerContent>
-        </Styled.TimerPlayerTwoContainer>
-      </Styled.TimerMobileContainer>
+      <Timer isMobile={true} />
 
       <Styled.PlayerOnePointsContainer>
         <LifePointsDisplay playerLifePoints={playerOneLifePoints} />
